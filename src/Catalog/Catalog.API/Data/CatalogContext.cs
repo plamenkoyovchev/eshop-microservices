@@ -1,7 +1,6 @@
 using Catalog.API.Data.Contracts;
 using Catalog.API.Entities;
 using Catalog.API.Settings;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Catalog.API.Data
@@ -10,13 +9,12 @@ namespace Catalog.API.Data
     {
         private readonly CatalogDbSettings catalogDbSettings;
 
-        public CatalogContext(IOptions<CatalogDbSettings> catalogDbSettings)
+        public CatalogContext(ICatalogDbSettings catalogDbSettings)
         {
-            this.catalogDbSettings = catalogDbSettings.Value;
-            var client = new MongoClient(this.catalogDbSettings.ConnectionString);
-            var database = client.GetDatabase(this.catalogDbSettings.DatabaseName);
+            var client = new MongoClient(catalogDbSettings.ConnectionString);
+            var database = client.GetDatabase(catalogDbSettings.DatabaseName);
 
-            this.Products = database.GetCollection<Product>(this.catalogDbSettings.CollectionName);
+            this.Products = database.GetCollection<Product>(catalogDbSettings.CollectionName);
         }
 
         public IMongoCollection<Product> Products { get; }

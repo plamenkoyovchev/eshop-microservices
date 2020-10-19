@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Catalog.API
 {
@@ -27,6 +28,8 @@ namespace Catalog.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CatalogDbSettings>(Configuration.GetSection(nameof(CatalogDbSettings)));
+            services.AddSingleton<ICatalogDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<CatalogDbSettings>>().Value);
 
             services.AddControllers();
         }
