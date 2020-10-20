@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Catalog.API.Data;
+using Catalog.API.Data.Contracts;
+using Catalog.API.Services;
+using Catalog.API.Services.Contracts;
 using Catalog.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +34,9 @@ namespace Catalog.API
             services.Configure<CatalogDbSettings>(Configuration.GetSection(nameof(CatalogDbSettings)));
             services.AddSingleton<ICatalogDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<CatalogDbSettings>>().Value);
+
+            services.AddTransient<ICatalogContext, CatalogContext>();
+            services.AddTransient<IProductService, ProductService>();
 
             services.AddControllers();
         }
