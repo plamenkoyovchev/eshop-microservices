@@ -1,23 +1,23 @@
-version: '3.4'
+version: "3.4"
 
 services:
-   
   catalogdb:
     container_name: catalogdb
     restart: always
     volumes:
-        - ${WEBAPP_STORAGE_HOME}/site:/data/db
+      - ${WEBAPP_STORAGE_HOME}/site:/data/db
+      - /tmp/mongo:/data/db #- volume for mac - must have write permissions
     ports:
-        - "27017:27017" 
+      - "27017:27017"
 
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CatalogDbSettings:ConnectionString=mongodb://catalogdb:27017"
     depends_on:
-        - catalogdb
+      - catalogdb
     ports:
       - "8000:80"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+      - ${HOME}/.aspnet/https:/root/.aspnet/https/
