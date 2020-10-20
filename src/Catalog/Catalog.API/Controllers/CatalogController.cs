@@ -19,6 +19,7 @@ namespace Catalog.API.Controllers
             this.productService = productService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var products = await this.productService.GetProductsAsync();
