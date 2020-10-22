@@ -14,7 +14,7 @@ namespace Catalog.API.Services.Contracts
 
         Task<IEnumerable<Product>> GetProductByCategoryAsync(string category);
 
-        Task Create(Product product);
+        Task<Product> Create(Product product);
 
         Task<bool> Update(Product product);
 

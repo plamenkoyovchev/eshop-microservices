@@ -18,29 +18,32 @@ namespace Catalog.API.Services
             this.catalog = catalog;
         }
 
-        public Task Create(Product product)
+        public async Task<Product> Create(Product product)
         {
-            throw new NotImplementedException();
+            await this.catalog.Products.InsertOneAsync(product);
+            return product;
         }
 
-        public Task<bool> Delete(string productId)
+        public async Task<bool> Delete(string productId)
         {
-            throw new NotImplementedException();
+            var result = await this.catalog.Products.DeleteOneAsync(p => p.Id == productId);
+
+            return result.IsAcknowledged && result.DeletedCount > 0;
         }
 
-        public Task<IEnumerable<Product>> GetProductByCategoryAsync(string category)
+        public async Task<IEnumerable<Product>> GetProductByCategoryAsync(string category)
         {
-            throw new NotImplementedException();
+            return await this.catalog.Products.Find(p => p.Category == category).ToListAsync();
         }
 
-        public Task<Product> GetProductByIdAsync(string id)
+        public async Task<Product> GetProductByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            return await this.catalog.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<Product>> GetProductByNameAsync(string name)
+        public async Task<IEnumerable<Product>> GetProductByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await this.catalog.Products.Find(p => p.Name == name).ToListAsync();
         }
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
@@ -48,9 +51,10 @@ namespace Catalog.API.Services
             return await this.catalog.Products.Find(p => true).ToListAsync();
         }
 
-        public Task<bool> Update(Product product)
+        public async Task<bool> Update(Product product)
         {
-            throw new NotImplementedException();
+            var result = await this.catalog.Products.ReplaceOneAsync(p => p.Id == product.Id, product);
+            return result.IsAcknowledged && result.ModifiedCount > 0;
         }
     }
 }
