@@ -38,5 +38,13 @@ namespace Catalog.API.Controllers
 
             return Ok(product);
         }
+
+        [HttpGet("category/{category}")]    
+        public async Task<ActionResult> GetByCategory(string category)
+        {
+            var products = await this.productService.GetProductByCategoryAsync(category);
+
+            return Ok(products);
+        }
     }
 }
