@@ -26,5 +26,17 @@ namespace Catalog.API.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet("{id:length(24)}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var product = await this.productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
     }
 }
