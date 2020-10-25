@@ -41,7 +41,7 @@ namespace Catalog.API.Services
             return await this.catalog.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductByNameAsync(string name)
+        public async Task<IEnumerable<Product>> GetProductsByNameAsync(string name)
         {
             return await this.catalog.Products.Find(p => p.Name == name).ToListAsync();
         }

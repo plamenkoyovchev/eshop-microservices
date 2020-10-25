@@ -10,7 +10,7 @@ namespace Catalog.API.Services.Contracts
 
         Task<Product> GetProductByIdAsync(string id);
 
-        Task<IEnumerable<Product>> GetProductByNameAsync(string name);
+        Task<IEnumerable<Product>> GetProductsByNameAsync(string name);
 
         Task<IEnumerable<Product>> GetProductByCategoryAsync(string category);
 
