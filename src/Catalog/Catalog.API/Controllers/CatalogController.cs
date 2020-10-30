@@ -54,5 +54,13 @@ namespace Catalog.API.Controllers
 
             return Ok(products);
         }
+
+        [HttpDelete("products/{id}")]
+        public async Task<IActionResult> DeleteProduct(string id)
+        {
+            await this.productService.Delete(id);
+
+            return Ok();
+        }
     }
 }
